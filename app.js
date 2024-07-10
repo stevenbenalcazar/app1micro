@@ -16,7 +16,7 @@ app.use('/service2', service2Router);
 app.use('/service3', service3Router);
 
 // Configurar puerto
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Iniciar el servidor
 app.listen(PORT, () => {
