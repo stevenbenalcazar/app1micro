@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Música</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .music-search {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+        }
+        .music-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .music-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Búsqueda de Música</h1>
+    <div class="music-search">
+        <button onclick="fetchMusic()">Buscar Música</button>
+        <div id="music-results" class="music-list">
+            <p id="loading-message">Presiona el botón para buscar música.</p>
+        </div>
+    </div>
+
+    <script>
+        function fetchMusic() {
+            fetch('/service2/music')
+                .then(response => response.json())
+                .then(data => {
+                    const musicList = data.results.map(result => `
+                        <div class="music-item">
+                            <p><strong>Título:</strong> ${result.title}</p>
+                            <p><strong>Artista:</strong> ${result.artist}</p>
+                            <p><strong>Álbum:</strong> ${result.album}</p>
+                            <p><strong>URL:</strong> <a href="${result.url}" target="_blank">${result.url}</a></p>
+                        </div>
+                    `).join('');
+
+                    document.getElementById('music-results').innerHTML = musicList;
+                })
+                .catch(error => {
+                    document.getElementById('music-results').innerHTML = '<p>Error al obtener los resultados de música.</p>';
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>

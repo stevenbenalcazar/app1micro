@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima Actual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .weather {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Clima Actual</h1>
+    <div id="weather-info" class="weather">
+        <p>Cargando...</p>
+    </div>
+    <script>
+        fetch('/service1')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('weather-info').innerHTML = `
+                    <p>Temperatura: ${data.temperature} °C</p>
+                    <p>Velocidad del Viento: ${data.windSpeed} m/s</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('weather-info').innerHTML = '<p>Error al obtener el clima.</p>';
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>

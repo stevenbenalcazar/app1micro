@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .service {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Microservices App</h1>
+    <div class="service">
+        <h2>Servicio 1</h2>
+        <p>Obtener el clima actual</p>
+        <button onclick="window.location.href='/appclima.html'">Ver Clima</button>
+    </div>
+    <div class="service">
+        <h2>Servicio 2</h2>
+        <p>Presiona el botón para buscar musica.</p>
+        <button onclick="window.location.href='/snake.html'">buscar musica</button>
+    </div>
+    <div class="service">
+        <h2>Servicio 3</h2>
+        <p id="service3-response">Presiona el botón para ver la respuesta.</p>
+        <button onclick="window.location.href='/service3.html'">cambio moneda</button>
+    </div>
+    <script>
+        function fetchService(service, elementId) {
+            fetch(`/${service}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(elementId).textContent = JSON.stringify(data);
+                })
+                .catch(error => {
+                    document.getElementById(elementId).textContent = 'Error al obtener el servicio';
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>

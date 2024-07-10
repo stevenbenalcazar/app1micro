@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Moneda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .currency-converter {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversión de Moneda</h1>
+    <div class="currency-converter">
+        <label for="fromCurrency">Desde:</label>
+        <input type="text" id="fromCurrency" value="EUR" placeholder="Moneda de origen">
+
+        <label for="toCurrency">A:</label>
+        <input type="text" id="toCurrency" value="GBP" placeholder="Moneda de destino">
+
+        <label for="amount">Cantidad:</label>
+        <input type="number" id="amount" value="50" placeholder="Cantidad a convertir">
+
+        <button onclick="fetchCurrencyConversion()">Convertir</button>
+    </div>
+
+    <div id="conversion-result" class="currency-converter">
+        <p id="result">Presiona el botón para realizar la conversión.</p>
+    </div>
+
+    <script>
+        function fetchCurrencyConversion() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const amount = document.getElementById('amount').value;
+
+            fetch(`/service3?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = `
+                        <p>Cantidad convertida: ${data.output.convertedAmount} ${data.output.currency}</p>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = '<p>Error al realizar la conversión.</p>';
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
+
